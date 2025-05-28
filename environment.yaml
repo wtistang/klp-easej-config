@@ -1,0 +1,85 @@
+#
+# Configuration for environment
+#
+version: 1.0
+app:
+  # Set the build version ID to deploy for the "Build, deploy, and run" 
+  # scenario. If the value is set to an empty string ("") the application
+  # is not deployed.
+  version: ""
+  
+  # Set the Maven coordinates of the Maven artifact to deploy for the 
+  # "Deploy, and run" scenario.
+  #maven:
+  #  groupId: net.wasdev.wlp.sample
+  #  artifactId: ferret
+  #  version: 1.2
+  #  type: war
+
+  # Set minimum and maximum number of instances of the application. 
+  # If the minimum and maximum values are different, the service scales the
+  # instances up and down based on the CPU utilization.
+  instances:
+    # The minimum number of instances. Must be at least 1. For 
+    # high-availability support, set this value to at least 3. The service
+    # spreads instances among different availability zones. 
+    # Defaults to 1 if not set.
+    min: 1
+    
+    # The maximum number of instances. Cannot be less than the min value. 
+    # Defaults to the min value if not set.
+    max: 1
+    
+  # Configure vCPU and indirectly memory resources for the application. 
+  # The memory assigned to the application is directly proportional to the 
+  # requested vCPU number multiplied by 4. For example, if cpu is set to 1, 4Gi
+  # memory is allocated to the application; if cpu is set to 2, 8Gi of memory
+  # is allocated to the application; and so on.  
+  resources:
+    # The vCPU number for the application. If not set, it defaults to 1 vCPU. 
+    # The max number of vCPU that can be requested is 14.
+    cpu: 1
+
+  # Set a list of environment variables for the application. Environment 
+  # variables such as JVM_ARGS, JAVA_HOME, or any WLP_* environment variables
+  # are ignored. Reference the environment variables in the server.xml using
+  # the ${SOME_ENV_VAR_NAME} notation.
+  env:
+    - name: SOME_ENV_VAR_NAME
+      value: some_env_var_value
+
+  # Set a list of Liberty variables for the application. 
+  # Reference the variables in the server.xml using the 
+  # ${some_liberty_variable_name} notation.
+  variables:
+    - name: some_liberty_variable_name
+      value: some_liberty_variable_value
+      
+  # Set a list of the system properties for the Java runtime.
+  systemProperties:
+    - name: some_system_property_name
+      value: some_system_property_value
+
+  # Enable a public endpoint for the application. If not set, the application
+  # is only available on an internal endpoint accessible to other applications
+  # within a subscription.
+  endpoints: public
+
+  # Set the Java runtime version for the application. Set to 8 for IBM Java 8,
+  # 17 for IBM Semeru 17, or 21 for IBM Semeru 21. If not set, the service
+  # tries to automatically detect the Java version for the application. If the
+  # service is unable to detect the Java runtime, it defaults to Java 17.
+  #java: 17
+  
+  # Set the name of the custom domain for the application.
+  #host: my_custom_domain.io
+
+  # Set a list of service bindings for the application. The bindings can be
+  # provided in two ways: by providing the full crn value of the service 
+  # instance or by providing the name and type of the service instance. The
+  # preferred way is to provide the crn value as the service instance names
+  # can change and might not be unique.
+  #services:
+  #- crn: crn:v1:bluemix:public:dashdb-for-transactions:us-east:a/123:456::
+  #- name: "my Db2 instance"
+  #  type: db2
